@@ -1,0 +1,5 @@
+SpotifyAPI
+GeniusAPI
+Sentiment Analysis
+SQLite database for saving songs. 
+Dashboard for viewing insights
