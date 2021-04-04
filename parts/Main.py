@@ -1,6 +1,11 @@
+import spotify as sp
+import Genius
+import Sentiment_Analysis as SA
+#import Persist_Data
+
 def info(song_artists):
-    lyric_list = getLyrics(feedTheGenius)  
-    sentiment_list = sentiment(lyric_list) 
+    lyric_list = Genius.getLyrics(feedTheGenius)  
+    sentiment_list = SA.sentiment(lyric_list) 
 
     song,artist = zip(*feedTheGenius)
 
@@ -8,7 +13,19 @@ def info(song_artists):
 
     return list(music_list)
 
-print(info(feedTheGenius))
+
+if __name__ == '__main__':
+    #get
+    spotify = sp.SpotifyAPI(sp.client_id, sp.client_secret)
+
+    songs_artist = spotify.get_names_and_artists('37i9dQZF1DXcBWIGoYBM5M')
+    feedTheGenius= list(songs_artist)
+
+    print(info(feedTheGenius))
+
+
+
+#print(info(feedTheGenius))
 
 #import json
 
