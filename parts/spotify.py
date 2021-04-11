@@ -123,9 +123,16 @@ class SpotifyAPI(object):
     
     def extract_track_features(self, playlist_id):
         #consider getting the playlist first then passing it to functions.
-        track_names, artist_names = self.get_names_and_artists(playlist_id)
+        track_names = self.get_names_and_artists(playlist_id)
+        track_names, artist_names = zip(*track_names)
         track_ids = self.get_track_IDs(playlist_id)
         #get the audio features for the track_ids extracted.
+         #this makes the list digestable to the API
+        translation = {39: None}
+        track_ids = str(track_ids).translate(translation)
+        track_ids=track_ids.replace(" ", "")
+        track_ids = str(track_ids)[1:-1]
+        
         endpoint = f"{self.base_URL}audio-features?ids={track_ids}"
         audio_features = self.make_request(endpoint)
         
