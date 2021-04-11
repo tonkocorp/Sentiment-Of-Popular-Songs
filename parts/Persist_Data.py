@@ -17,6 +17,7 @@ c.execute("""CREATE TABLE TopSongs(
 '''
 
 
+
 today = date.today()
 today = today.strftime("%m/%d/%y")
 def InsertIntoTable(list):
@@ -30,7 +31,7 @@ def InsertIntoTable(list):
 
     
 
-InsertIntoTable(test)
+#InsertIntoTable(test)
 
-c.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
-print(c.fetchall())
+#c.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
+#print(c.fetchall())

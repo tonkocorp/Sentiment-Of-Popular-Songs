@@ -1,7 +1,7 @@
 import spotify as sp
 import Genius
 import Sentiment_Analysis as SA
-#import Persist_Data
+import Persist_Data
 
 def info(song_artists):
     lyric_list = Genius.getLyrics(feedTheGenius)  
@@ -15,13 +15,27 @@ def info(song_artists):
 
 
 if __name__ == '__main__':
+    playlist_Id = '37i9dQZF1DXcBWIGoYBM5M'
     #get
     spotify = sp.SpotifyAPI(sp.client_id, sp.client_secret)
 
-    songs_artist = spotify.get_names_and_artists('37i9dQZF1DXcBWIGoYBM5M')
-    feedTheGenius= list(songs_artist)
+    songs_artist = spotify.get_names_and_artists(playlist_Id)
+    feedTheGenius = list(songs_artist)
 
-    print(info(feedTheGenius))
+    sentiment_list = info(feedTheGenius)
+    #print features
+    track_features = spotify.extract_track_features(playlist_Id)
+    #print(track_features)
+    SQL = Persist_Data.c
+    addData = Persist_Data.InsertIntoTable
+    addData(sentiment_list)
+
+    
+
+    SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
+    print(SQL.fetchall())
+
+    
 
 
 
