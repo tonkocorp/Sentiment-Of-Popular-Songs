@@ -33,5 +33,9 @@ def InsertIntoTable(list):
 
 #InsertIntoTable(test)
 
-#c.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
-#print(c.fetchall())
+c.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.3 ")
+print(c.fetchall())
+
+c.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.2 ")
+print(c.fetchall())
+

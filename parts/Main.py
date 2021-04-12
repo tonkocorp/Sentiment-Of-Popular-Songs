@@ -25,14 +25,14 @@ if __name__ == '__main__':
     sentiment_list = info(feedTheGenius)
     #print features
     track_features = spotify.extract_track_features(playlist_Id)
-    #print(track_features)
+    print(track_features)
     SQL = Persist_Data.c
     addData = Persist_Data.InsertIntoTable
     addData(sentiment_list)
 
     
 
-    SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
+    CertianScore = SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
     print(SQL.fetchall())
 
     
