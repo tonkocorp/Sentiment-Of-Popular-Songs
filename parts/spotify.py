@@ -141,7 +141,7 @@ class SpotifyAPI(object):
         mode = []
         speechiness = []
         acousticness = []
-        instumentalness = []
+        instrumentalness = []
         liveness = []
         duration_ms = []
         time_signature = []
@@ -155,7 +155,7 @@ class SpotifyAPI(object):
             mode.append(x['mode'])
             speechiness.append(x['speechiness'])
             acousticness.append(x['acousticness'])
-            instumentalness.append(x['instrumentalness'])
+            instrumentalness.append(x['instrumentalness'])
             liveness.append(x['liveness'])
             duration_ms.append(x['duration_ms'])
             time_signature.append(x['time_signature'])

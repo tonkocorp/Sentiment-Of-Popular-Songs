@@ -10,7 +10,7 @@ sia = SentimentIntensityAnalyzer()
 #         sentiment_list.append(results)
 #     return sentiment_list
 
-
+# add something in here if did not return any lryics
 def sentiment(lyric_list):
     sentiment_list = []
     for entry in lyric_list:

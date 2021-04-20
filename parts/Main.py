@@ -4,11 +4,15 @@ import Sentiment_Analysis as SA
 import Persist_Data
 
 def wrap_it_up(songs_and_artists, sentiment_list, song_features):
+    
+    print(len(sentiment_list))
+    
     #print(list(song_features))
-    song_features = spotify.extract_track_features(track_ids)
+    #song_features = song_features
 
     song, artist = zip(*songs_and_artists)
     #print(list(song))
+    print(len(song))
     
 
 
@@ -33,14 +37,14 @@ if __name__ == '__main__':
     #this is also fed into the extract features
     #keep in mind that both names and ids call on get_playlist
 
-    playlist = spotify.get_playlist(playlist_Id, limit=2)
+    playlist = spotify.get_playlist(playlist_Id, limit=5)
     #print(playlist)
     songs_and_artists1 = spotify.get_names_and_artists(playlist)
     songs_and_artists2 = spotify.get_names_and_artists(playlist)
     #print(list(songs_and_artists))
     track_ids = spotify.get_track_IDs(playlist)
     
-    #song_features = spotify.extract_track_features(track_ids)
+    song_features = spotify.extract_track_features(track_ids)
     
 
 
@@ -52,7 +56,7 @@ if __name__ == '__main__':
     #print(list(songs_and_artists2))
     #print(list(song_features))
 
-    final_list = wrap_it_up(songs_and_artists1, song_sentiment, track_ids)
+    final_list = wrap_it_up(songs_and_artists1, song_sentiment, song_features)
 
     print(final_list)
     
