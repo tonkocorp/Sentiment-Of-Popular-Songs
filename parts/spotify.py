@@ -3,6 +3,8 @@ import requests
 import datetime
 import pandas as pd
 from urllib.parse import urlencode
+import Genius
+import Sentiment_Analysis
 
 
 
@@ -99,19 +101,23 @@ class SpotifyAPI(object):
         return playlist
     
            
-    def get_track_IDs(self, playlist_id, limit = 10, offset= 0 ): # the feature to add more than one song needs to be added here.
-        playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
+    def get_track_IDs(self, playlist ): # the feature to add more than one song needs to be added here.
+        #playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
         track_ids = []
        
         for x in playlist['items']:
             track_ids.append(x['track']['id'])
          
         #super_ID = ','.join(track_ids) #THIS Feature needs to be moved to its own function
+        translation = {39: None}
+        track_ids = str(track_ids).translate(translation)
+        track_ids=track_ids.replace(" ", "")
+        track_ids = str(track_ids)[1:-1]
         
         return track_ids #, artist_names
 
-    def get_names_and_artists(self, playlist_id, limit = 5, offset= 0 ): 
-        playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
+    def get_names_and_artists(self, playlist_id): 
+        #playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
         track_names = []
         artist_names = [] 
         for x in playlist['items']:
@@ -120,18 +126,9 @@ class SpotifyAPI(object):
         
         return zip(track_names, artist_names) 
 
-    
-    def extract_track_features(self, playlist_id):
-        #consider getting the playlist first then passing it to functions.
-        track_names = self.get_names_and_artists(playlist_id)
-        track_names, artist_names = zip(*track_names)
-        track_ids = self.get_track_IDs(playlist_id)
-        #get the audio features for the track_ids extracted.
-         #this makes the list digestable to the API
-        translation = {39: None}
-        track_ids = str(track_ids).translate(translation)
-        track_ids=track_ids.replace(" ", "")
-        track_ids = str(track_ids)[1:-1]
+    #all that is need here is trackId
+    def extract_track_features(self, track_ids):
+        
         
         endpoint = f"{self.base_URL}audio-features?ids={track_ids}"
         audio_features = self.make_request(endpoint)
@@ -153,7 +150,7 @@ class SpotifyAPI(object):
             energy.append(x['energy'])
             danceability.append(x['danceability'])
             tempo.append(x['tempo'])
-            key.append(x['key'])
+            key.append(x['key']) 
             loudness.append(x['loudness'])
             mode.append(x['mode'])
             speechiness.append(x['speechiness'])
@@ -163,14 +160,14 @@ class SpotifyAPI(object):
             duration_ms.append(x['duration_ms'])
             time_signature.append(x['time_signature'])
             
-            df = pd.DataFrame(list(zip(track_names,artist_names, energy, danceability, tempo, 
+            features_list = list(zip( energy, danceability, tempo, 
                                   key, loudness, mode, speechiness,acousticness,
                                   instumentalness, liveness, duration_ms, time_signature)), 
                          
-               columns =['Track-Name','Artist','Energy', 'danceability','tempo', 
-                         'key', 'loudness', 'mode', 'speechiness', 'acousticness', 
-                         'instrumentalness', 'liveness', 'duration_ms', 'time_signature'])
+              # columns =['Track-Name','Artist','Sentiment','Energy', 'danceability','tempo', 
+              #          'key', 'loudness', 'mode', 'speechiness', 'acousticness', 
+              #           'instrumentalness', 'liveness', 'duration_ms', 'time_signature'])
 
         
         
-        return df
+        return features_list
