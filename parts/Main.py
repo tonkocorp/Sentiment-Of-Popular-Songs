@@ -58,34 +58,13 @@ if __name__ == '__main__':
 
     final_list = wrap_it_up(songs_and_artists1, song_sentiment, song_features)
 
-    print(final_list)
-    
-    
-    #here need to zip all the functions
+    #-----------------------------------------------------------
+    #DATABASE
 
-    #get track features
-    '''
-    here it might be better if the extract features
-    took in song_artist and sentiment list.
-
-    It might also be better to have extract features 
-    be its own thing again.
-
-    So there is function that takes in the lists.
-    -songartist
-    -sentiment_list
-    -featues list
-
-    This way the spotify API servers two purposes it grabs the 
-    songs and also extracts their features.
-
-
-    '''
- 
-    
     SQL = Persist_Data.c
-    addData = Persist_Data.InsertIntoTable
-    #addData(sentiment_list)
+    addData = Persist_Data.InsertIntoTable()
+    addData(final_list)
+    
 
     
 

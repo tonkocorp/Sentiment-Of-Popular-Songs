@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import date
 
+
 t#test = [('Hold On', 'Justin Bieber', 0.056319565217391294), ('What’s Next', 'Drake', 0.09372375000000002), ('Selfish Love (with Selena Gomez)', 'DJ Snake', 0.2365323529411765), ('Save Your Tears', 'The Weeknd', 0.06771944444444444), ("We're Good", 'Dua Lipa', 0.31093)]
 
 conn = sqlite3.connect('songs.db')
