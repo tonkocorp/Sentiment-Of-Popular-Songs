@@ -66,32 +66,7 @@ if __name__ == '__main__':
     addData(final_list)
     
 
-    
-
     CertianScore = SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
     #print(SQL.fetchall())
 
     
-
-
-
-#print(info(feedTheGenius))
-
-#import json
-
-#my_details = info(feedTheGenius)
- 
-
-#with open('sentiment_scores.json', 'w') as json_file:
-#    json.dump(my_details, json_file)
-
-  
-
-
-
-
-
-#feedTheGenius= list(feedTheGenius)# [('Calling My Phone', 'Lil Tjay'), ('Goosebumps - Remix', 'Travis Scott'), ("We're Good", 'Dua Lipa')
-#lyric_list = getLyrics(feedTheGenius) # returns a list of the lyrics
-
-#print(lyric_list)
