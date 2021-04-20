@@ -11,7 +11,7 @@ skip_non_songs=True, excluded_terms=[ "(Live)"], remove_section_headers=True)
 # the key needs to be the song name
 #TopSongs = {"MotorSport": "Migos", "Heart of Gold": "Neil Young" }
 
-def getLyrics(TopSongs):
+def get_lyrics(TopSongs):
 
     lyricList = []
     #add a method to check whether the song is alreadt in the pipeline

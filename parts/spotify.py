@@ -116,7 +116,7 @@ class SpotifyAPI(object):
         
         return track_ids #, artist_names
 
-    def get_names_and_artists(self, playlist_id): 
+    def get_names_and_artists(self, playlist): 
         #playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
         track_names = []
         artist_names = [] 
@@ -160,9 +160,9 @@ class SpotifyAPI(object):
             duration_ms.append(x['duration_ms'])
             time_signature.append(x['time_signature'])
             
-            features_list = list(zip( energy, danceability, tempo, 
+            features_list = zip( energy, danceability, tempo, 
                                   key, loudness, mode, speechiness,acousticness,
-                                  instumentalness, liveness, duration_ms, time_signature)), 
+                                  instumentalness, liveness, duration_ms, time_signature) 
                          
               # columns =['Track-Name','Artist','Sentiment','Energy', 'danceability','tempo', 
               #          'key', 'loudness', 'mode', 'speechiness', 'acousticness', 
