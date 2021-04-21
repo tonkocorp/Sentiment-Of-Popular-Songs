@@ -4,7 +4,7 @@ from datetime import date
 
 #test = [('Hold On', 'Justin Bieber', 0.056319565217391294), ('What’s Next', 'Drake', 0.09372375000000002), ('Selfish Love (with Selena Gomez)', 'DJ Snake', 0.2365323529411765), ('Save Your Tears', 'The Weeknd', 0.06771944444444444), ("We're Good", 'Dua Lipa', 0.31093)]
 
-conn = sqlite3.connect('songs.db')
+conn = sqlite3.connect('songs.db') # :memory:
 c = conn.cursor()
 
 '''
@@ -13,22 +13,22 @@ c.execute("""CREATE TABLE TopSongs(
     Position integer,
     SongName text,
     Artist text,
-    SentimentScore integer
-    Energy integer
-    Danceability integer
-    Tempo integer
-    Key integer
-    Loudness integer
-    Mode integer
-    Speechiness integer
-    Acousticness integer
-    Instrumentalness integer
-    Liveness integer
-    Duration_ms integer
-    Time_Signature  integer
+    SentimentScore integer,
+    Energy integer,
+    Danceability integer,
+    Tempo integer,
+    Key integer,
+    Loudness integer,
+    Mode integer,
+    Speechiness integer,
+    Acousticness integer,
+    Instrumentalness integer,
+    Liveness integer,
+    Duration_ms integer,
+    Time_Signature integer
 )""")
-'''
 
+'''
 
 
 today = date.today()
@@ -37,7 +37,7 @@ def InsertIntoTable(list):
     position = 1
     
     for entry in list:
-       c.execute("INSERT INTO TopSongs VALUES (:Date, :Position, :SongName, :Artist, :SentimentScore)",
+       c.execute("INSERT INTO TopSongs VALUES (:Date, :Position, :SongName, :Artist, :SentimentScore, :Energy, :Danceability, :Tempo, :Key, :Loudness, :Mode, :Speechiness, :Acousticness, :Instrumentalness, :Liveness, :Duration_ms, :Time_Signature)",
        {'Date': today,'Position': position, 'SongName': entry[0], 'Artist': entry[1], 'SentimentScore': entry[2],
        'Energy': entry[3], 'Danceability':entry[4], 'Tempo':entry[5],
        'Key': entry[6], 'Loudness':entry[7], 'Mode': entry[8], 

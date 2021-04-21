@@ -60,13 +60,14 @@ if __name__ == '__main__':
 
     #-----------------------------------------------------------
     #DATABASE
+    #print(final_list)
 
     SQL = Persist_Data.c
-    addData = Persist_Data.InsertIntoTable()
-    addData(final_list)
+    addData = Persist_Data.InsertIntoTable(final_list)
+    
     
 
     CertianScore = SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
-    #print(SQL.fetchall())
+    print(SQL.fetchall())
 
     

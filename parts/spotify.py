@@ -162,7 +162,7 @@ class SpotifyAPI(object):
             
             features_list = zip( energy, danceability, tempo, 
                                   key, loudness, mode, speechiness,acousticness,
-                                  instumentalness, liveness, duration_ms, time_signature) 
+                                  instrumentalness, liveness, duration_ms, time_signature) 
                          
               # columns =['Track-Name','Artist','Sentiment','Energy', 'danceability','tempo', 
               #          'key', 'loudness', 'mode', 'speechiness', 'acousticness', 
