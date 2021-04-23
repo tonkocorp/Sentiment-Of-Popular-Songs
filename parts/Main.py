@@ -5,6 +5,7 @@ import Persist_Data
 
 import pandas as pd
 
+
 def wrap_it_up(songs_and_artists, sentiment_list, song_features):
     
     print(len(sentiment_list))
@@ -32,8 +33,7 @@ def wrap_it_up(songs_and_artists, sentiment_list, song_features):
 
     return list(music_list)
 
-
-if __name__ == '__main__':
+def main():
     playlist_Id = '37i9dQZF1DXcBWIGoYBM5M'
     spotify = sp.SpotifyAPI(sp.client_id, sp.client_secret)
     #this is also fed into the extract features
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     #-----------------------------------------------------------
     #DATABASE
     #print(final_list)
-    #addData = Persist_Data.InsertIntoTable(final_list)
+    addData = Persist_Data.InsertIntoTable(final_list)
 
     conn = Persist_Data.conn
     c = Persist_Data.c
@@ -77,11 +77,23 @@ if __name__ == '__main__':
     df = pd.read_sql_query("SELECT * FROM TopSongs", conn)
     print(df)
 
+import time
+one_minute = 30
+
+if __name__ == '__main__':
+    
+    while True:
+        start = time.time()
+        main()
+        stop = time.time()
+        elapsed = stop - start
+        time.sleep(one_minute - elapsed)
+    
 
 
 
     
-    addData = Persist_Data.InsertIntoTable(final_list)
+
     
     # get SQLite to output a pandas dataframe.
     #CertianScore = SQL.execute("SELECT * FROM TopSongs WHERE SentimentScore > 0.1 ")
