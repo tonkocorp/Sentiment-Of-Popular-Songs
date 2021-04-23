@@ -63,22 +63,21 @@ if __name__ == '__main__':
     #-----------------------------------------------------------
     #DATABASE
     #print(final_list)
-    addData = Persist_Data.InsertIntoTable(final_list)
+    #addData = Persist_Data.InsertIntoTable(final_list)
 
     conn = Persist_Data.conn
     c = Persist_Data.c
 
     #check for duplicates
 
-    duplicates = pd.read_sql_query("SELECT SongName, COUNT(*) as Count FROM TopSongs GROUP BY SongName HAVING COUNT(*) > 1",conn)
+    duplicates = pd.read_sql_query("SELECT SongName, Day, COUNT(*) as Count FROM TopSongs GROUP BY SongName, Day HAVING COUNT(*) > 1",conn)
     print(duplicates)
 
 
     df = pd.read_sql_query("SELECT * FROM TopSongs", conn)
     print(df)
 
-    #Delete duplicates
-    c.execute("DElETE from TopSongs WHERE DATE=")
+
 
 
     
