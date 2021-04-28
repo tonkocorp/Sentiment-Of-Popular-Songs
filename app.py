@@ -5,9 +5,16 @@ import pandas as pd
 import numpy as np
 from dash.dependencies import Output, Input
 
-data = pd.read_csv("avocado.csv")
-data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
-data.sort_values("Date", inplace=True)
+import sqlite3
+
+conn = sqlite3.connect('songs.db')
+data = pd.read_sql_query("SELECT * FROM TopSongs", conn)
+
+# get the average of all sentiment scores for the day
+avg = pd.read_sql_query("SELECT AVG(SentimentScore) FROM TopSongs GROUP BY Day ",conn)
+print(avg)
+data["Day"] = pd.to_datetime(data["Day"], format="%m/%d/%y")
+data.sort_values("Day", inplace=True)
 
 external_stylesheets = [
     {
@@ -17,7 +24,7 @@ external_stylesheets = [
     },
 ]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "Avocado Analytics: Understand Your Avocados!"
+app.title = "Ssentiment Analysis of the Top Songs on Spotify: Daily Updates!"
 
 app.layout = html.Div(
     children=[
@@ -25,7 +32,7 @@ app.layout = html.Div(
             children=[
                 html.P(children="🥑", className="header-emoji"),
                 html.H1(
-                    children="Avocado Analytics", className="header-title"
+                    children="Sentiment of the Top Songs on Spotify", className="header-title"
                 ),
                 html.P(
                     children="Analyze the behavior of avocado prices"
@@ -40,12 +47,12 @@ app.layout = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div(children="Region", className="menu-title"),
+                        html.Div(children="Arists", className="menu-title"),
                         dcc.Dropdown(
                             id="region-filter",
                             options=[
-                                {"label": region, "value": region}
-                                for region in np.sort(data.region.unique())
+                                {"label": artist, "value": artist}
+                                for artist in np.sort(data.Artist.unique())
                             ],
                             value="Albany",
                             clearable=False,
@@ -55,12 +62,12 @@ app.layout = html.Div(
                 ),
                 html.Div(
                     children=[
-                        html.Div(children="Type", className="menu-title"),
+                        html.Div(children="Song", className="menu-title"),
                         dcc.Dropdown(
                             id="type-filter",
                             options=[
                                 {"label": avocado_type, "value": avocado_type}
-                                for avocado_type in data.type.unique()
+                                for avocado_type in data.SongName.unique()
                             ],
                             value="organic",
                             clearable=False,
@@ -77,10 +84,10 @@ app.layout = html.Div(
                             ),
                         dcc.DatePickerRange(
                             id="date-range",
-                            min_date_allowed=data.Date.min().date(),
-                            max_date_allowed=data.Date.max().date(),
-                            start_date=data.Date.min().date(),
-                            end_date=data.Date.max().date(),
+                            min_date_allowed=data.Day.min().date(),
+                            max_date_allowed=data.Day.max().date(),
+                            start_date=data.Day.min().date(),
+                            end_date=data.Day.max().date(),
                         ),
                     ]
                 ),
@@ -107,29 +114,29 @@ app.layout = html.Div(
     ]
 )
 
-
+#Inputs to graphs get defined here
 @app.callback(
     [Output("price-chart", "figure"), Output("volume-chart", "figure")],
     [
-        Input("region-filter", "value"),
-        Input("type-filter", "value"),
+        Input("Artist", "value"),
+        Input("Song", "value"),
         Input("date-range", "start_date"),
         Input("date-range", "end_date"),
     ],
 )
-def update_charts(region, avocado_type, start_date, end_date):
+def update_charts(artist, song, start_date, end_date):
     mask = (
-        (data.region == region)
-        & (data.type == avocado_type)
-        & (data.Date >= start_date)
-        & (data.Date <= end_date)
+        (data.Artist == artist)
+        & (data.Song == song)
+        & (data.Day >= start_date)
+        & (data.Day <= end_date)
     )
     filtered_data = data.loc[mask, :]
     price_chart_figure = {
         "data": [
             {
-                "x": filtered_data["Date"],
-                "y": filtered_data["AveragePrice"],
+                "x": filtered_data["Day"],
+                "y": filtered_data["SentimentScore"],
                 "type": "lines",
                 "hovertemplate": "$%{y:.2f}<extra></extra>",
             },
