@@ -63,7 +63,10 @@ def main():
     #-----------------------------------------------------------
     #DATABASE
     #print(final_list)
-    addData = Persist_Data.InsertIntoTable(final_list)
+    if final_list in TopSongs:
+        return "thats already there!"
+    else:
+        addData = Persist_Data.InsertIntoTable(final_list)
 
     conn = Persist_Data.conn
     c = Persist_Data.c
