@@ -113,7 +113,7 @@ class SpotifyAPI(object):
         return track_ids #, artist_names
 
     def get_names_and_artists(self, playlist_id, limit = 5, offset= 0 ): 
-        playlist = self.get_playlistpip3 freeze > requirements.txt(playlist_id, limit=limit, offset=offset)
+        playlist = self.get_playlist(playlist_id, limit=limit, offset=offset)
         track_names = []
         artist_names = [] 
         for x in playlist['items']:
