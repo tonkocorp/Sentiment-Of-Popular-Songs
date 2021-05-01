@@ -33,9 +33,12 @@ external_stylesheets = [
 ]
 
 #Graphs-----------------------------------------------------------
+'''
 fig = px.scatter(data, x="Date", y="SentimentScore",
                  size="SongName", color="SongName", hover_name="Artist",
                  log_x=True, size_max=60)
+
+'''
 
 #-----------------------------------------------------------------
 
@@ -58,13 +61,20 @@ app.layout = html.Div(
                 ),
             ],
             className="header",
+        ),
+        dcc.Graph(
+            figure={
+                "data": [
+                    {
+                        "x": data["Date"],
+                        "y": data["SentimentScore"],
+                        "type": "lines",
+                    },
+                ],
+                "layout": {"title": "Sentiment over Time"},
+            },
         ), 
-        html.Div([
-                dcc.Graph(
-                id='life-exp-vs-gdp',
-                figure=fig
-                )
-        ])
+      
     ])
 
 
