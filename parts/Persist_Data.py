@@ -39,7 +39,7 @@ c.execute("""CREATE TABLE TopSongs(
 today = date.today()
 today = today.strftime("%m/%d/%y")
 
-today = "05/01/21"
+today = "05/02/21"
 
 
 def InsertIntoTable(list):

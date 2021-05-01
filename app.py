@@ -66,8 +66,8 @@ app.layout = html.Div(
             figure={
                 "data": [
                     {
-                        "x": data["Date"],
-                        "y": data["SentimentScore"],
+                        "x": avg["Date"],
+                        "y": avg["AVG(SentimentScore)"],
                         "type": "lines",
                     },
                 ],
