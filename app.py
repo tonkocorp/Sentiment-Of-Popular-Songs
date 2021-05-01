@@ -12,6 +12,7 @@ import MySQLStatements as sql
 #SQL--------------------------------------------------------------
 conn = sqlite3.connect('songs.db')
 data = pd.read_sql_query(sql.selectAll, conn)
+print(data)
 
 # get the average of all sentiment scores for the day
 avg = pd.read_sql_query(sql.averageSentiment,conn)
@@ -20,8 +21,8 @@ comparison = pd.read_sql_query(sql.tempoVersus,conn)
 print(comparison)
 
 #-----------------------------------------------------------------
-data["Day"] = pd.to_datetime(data["Day"], format="%m/%d/%y")
-data.sort_values("Day", inplace=True)
+data["Date"] = pd.to_datetime(data["Date"], format="%m/%d/%y")
+data.sort_values("Date", inplace=True)
 
 external_stylesheets = [
     {
@@ -32,7 +33,7 @@ external_stylesheets = [
 ]
 
 #Graphs-----------------------------------------------------------
-fig = px.scatter(comparison, x="Tempo", y="SentimentScore",
+fig = px.scatter(data, x="Date", y="SentimentScore",
                  size="SongName", color="SongName", hover_name="Artist",
                  log_x=True, size_max=60)
 

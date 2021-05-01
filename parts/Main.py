@@ -63,17 +63,15 @@ def main():
     #-----------------------------------------------------------
     #DATABASE
     #print(final_list)
-    if final_list in TopSongs:
-        return "thats already there!"
-    else:
-        addData = Persist_Data.InsertIntoTable(final_list)
+  
+    #addData = Persist_Data.InsertIntoTable(final_list)
 
     conn = Persist_Data.conn
     c = Persist_Data.c
 
     #check for duplicates
 
-    duplicates = pd.read_sql_query("SELECT SongName, Day, COUNT(*) as Count FROM TopSongs GROUP BY SongName, Day HAVING COUNT(*) > 1",conn)
+    duplicates = pd.read_sql_query("SELECT SongName, Date, COUNT(*) as Count FROM TopSongs GROUP BY SongName, Date HAVING COUNT(*) > 1",conn)
     print(duplicates)
 
 
@@ -81,7 +79,7 @@ def main():
     print(df)
 
 import time
-one_minute = 30
+one_minute = 86400
 
 if __name__ == '__main__':
     

@@ -9,25 +9,26 @@ c = conn.cursor()
 
 '''
 c.execute("""CREATE TABLE TopSongs(
-    Day text,
+    Date Date,
     Position integer,
     SongName text,
     Artist text,
-    SentimentScore integer,
-    Energy integer,
-    Danceability integer,
-    Tempo integer,
+    SentimentScore float,
+    Energy float,
+    Danceability float,
+    Tempo float,
     Key integer,
-    Loudness integer,
+    Loudness float,
     Mode integer,
-    Speechiness integer,
-    Acousticness integer,
-    Instrumentalness integer,
-    Liveness integer,
-    Duration_ms integer,
-    Time_Signature integer
+    Speechiness float,
+    Acousticness float,
+    Instrumentalness float,
+    Liveness float,
+    Duration_ms float,
+    Time_Signature int
 )""")
 '''
+
 
 
 
@@ -38,12 +39,12 @@ def InsertIntoTable(list):
     position = 1
     
     for entry in list:
-       c.execute("INSERT INTO TopSongs VALUES (:Day, :Position, :SongName, :Artist, :SentimentScore, :Energy, :Danceability, :Tempo, :Key, :Loudness, :Mode, :Speechiness, :Acousticness, :Instrumentalness, :Liveness, :Duration_ms, :Time_Signature)",
-       {'Day': today,'Position': position, 'SongName': entry[0], 'Artist': entry[1], 'SentimentScore': entry[2],
+       c.execute("INSERT INTO TopSongs VALUES (:Date, :Position, :SongName, :Artist, :SentimentScore, :Energy, :Danceability, :Tempo, :Key, :Loudness, :Mode, :Speechiness, :Acousticness, :Instrumentalness, :Liveness, :Duration_ms, :Time_Signature)",
+       {'Date': today,'Position': position, 'SongName': entry[0], 'Artist': entry[1], 'SentimentScore': entry[2],
        'Energy': entry[3], 'Danceability':entry[4], 'Tempo':entry[5],
        'Key': entry[6], 'Loudness':entry[7], 'Mode': entry[8], 
        'Speechiness':entry[9], 'Acousticness':entry[10], 'Instrumentalness':entry[11],
-       'Liveness':entry[11], 'Duration_ms': entry[12], 'Time_Signature':entry[13]})
+       'Liveness':entry[12], 'Duration_ms': entry[13], 'Time_Signature':entry[14]})
        conn.commit()
        position+=1
 
