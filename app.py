@@ -39,6 +39,7 @@ fig = px.scatter(data, x="Date", y="SentimentScore",
                  log_x=True, size_max=60)
 
 '''
+fig = px.scatter(data, x="Tempo", y="SentimentScore")
 
 #-----------------------------------------------------------------
 
@@ -70,10 +71,11 @@ app.layout = html.Div(
                         "y": avg["AVG(SentimentScore)"],
                         "type": "lines",
                     },
-                ],
+                ], 
                 "layout": {"title": "Sentiment over Time"},
-            },
-        ), 
+            }, className ="card",
+        ),
+        dcc.Graph(figure = fig)
       
     ])
 
