@@ -63,6 +63,21 @@ app.layout = html.Div(
             ],
             className="header",
         ),
+        html.Div([
+            dcc.Dropdown(
+                id='crossfilter-xaxis-column',
+                options=[{'label': i, 'value': i} for i in data],
+                value='SongSentiment, total (births per woman)'
+            ),
+            dcc.RadioItems(
+                id='crossfilter-xaxis-type',
+                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                value='Linear',
+                labelStyle={'display': 'inline-block'}
+            )
+        ],
+        #className="menu"
+        style={'width': '49%', 'display': 'inline-block'}),
         dcc.Graph(
             figure={
                 "data": [
