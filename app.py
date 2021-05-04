@@ -78,7 +78,7 @@ app.layout = html.Div(
             )
         ],
         #className="menu"
-        style={'width': '49%', 'display': 'inline-block'}),
+        style={'width': '80%', 'display': 'inline-block'}),
         dcc.Graph(
             figure={
                 "data": [
@@ -91,11 +91,26 @@ app.layout = html.Div(
                 "layout": {"title": "Average Sentiment over Time"},
             }, className ="card",
         ),
-        dcc.Graph(figure = fig)
+        
+        dcc.Graph(id="songposition", figure = fig),
+        dcc.Slider(
+        id='my-slider',
+        min=0,
+        max=10,
+        step=0.5,
+        value=10,
+    ),
+    html.Div(id='slider-output-container'),
+    html.Img(src='https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1')
+])
       
-    ])
+    #])
 
-
+@app.callback(
+    dash.dependencies.Output('slider-output-container', 'children'),
+    [dash.dependencies.Input('my-slider', 'value')])
+def update_output(value):
+    return 'You have selected "{}"'.format(value)
 
 
 
