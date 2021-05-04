@@ -39,7 +39,8 @@ fig = px.scatter(data, x="Date", y="SentimentScore",
                  log_x=True, size_max=60)
 
 '''
-fig = px.scatter(data, x="Tempo", y="SentimentScore")
+fig = px.scatter(data, x="Date", y="SentimentScore", 
+                size="Position", hover_data=["SongName", "Artist"], color="Position")
 
 #-----------------------------------------------------------------
 
@@ -87,7 +88,7 @@ app.layout = html.Div(
                         "type": "lines",
                     },
                 ], 
-                "layout": {"title": "Sentiment over Time"},
+                "layout": {"title": "Average Sentiment over Time"},
             }, className ="card",
         ),
         dcc.Graph(figure = fig)
