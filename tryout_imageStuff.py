@@ -71,7 +71,7 @@ def update_graph(xaxis_column_name, yaxis_column_name,
                      hover_name=yaxis_column_name,
                      size = yaxis_column_name,
                      hover_data=["SongName", "Artist"],
-                     color = xaxis_column_name
+                     
                      )
 
     fig.update_layout(margin={'l': 40, 'b': 40, 't': 10, 'r': 0}, hovermode='closest')
