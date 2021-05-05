@@ -35,13 +35,6 @@ external_stylesheets = [
     },
 ]
 
-#Graphs-----------------------------------------------------------
-'''
-fig1 = px.scatter(data, x="Date", y="SentimentScore",
-                 size="SongName", color="SongName", hover_name="Artist",
-                 log_x=True, size_max=60)
-'''
-
 
 #-----------------------------------------------------------------
 
@@ -52,7 +45,7 @@ app.title = "Sentiment Analysis of the Top Songs on Spotify: Daily Updates!"
 app.layout = html.Div(
     children=[html.Div(
             children=[
-                html.P(children="🎼 = 🙂 or 🙃  ", className="header-emoji"),
+                html.P( className="header-image"),
                 html.H1(
                     children="Sentiment of the Top Songs on Spotify", className="header-title"
                 ),
@@ -65,6 +58,31 @@ app.layout = html.Div(
             ],
             className="header",
         ),
+         html.Div( children=[
+                                html.H4(
+                                    className='what-is',
+                                    children='Whats the point of this project?'
+                                ),
+                                html.P(
+                                    """
+                                    Sentiment Analysis is a field of machine learning that seeks to
+                                    extract subjective material from text. 
+                                    """
+                                ),
+                                html.P(
+                                    """
+                                    Each point on the graph is the average sentiment score of the Top Songs for that day.
+                                     
+                                    """
+                                ),
+                                html.P(
+                                    """
+                                    Read more about the component here:
+                                    https://github.com/plotly/react-alignment-viewer
+                                    """
+                                ),
+                            ]),
+       
        
 
         html.Div(
@@ -79,19 +97,45 @@ app.layout = html.Div(
                 ], 
                 "layout": {"title": "Average Sentiment over Time"},
             }, 
-        ),className ="card", style={'width': '50%', 'display': 'inline-block','position': 'right'},
+        ),className ="card", style={'width': '90%', 'display': 'inline-block','text-allign': 'center'},
         ),
+
+        html.Div( children=[
+                                html.H4(
+                                    className='what-is',
+                                    children='Whats the point of this project?'
+                                ),
+                                html.P(
+                                    """
+                                    Sentiment Analysis is a field of machine learning that seeks to
+                                    extract subjective material from text. 
+                                    """
+                                ),
+                                html.P(
+                                    """
+                                    Each point on the graph is the average sentiment score of the Top Songs for that day.
+                                     
+                                    """
+                                ),
+                                html.P(
+                                    """
+                                    Read more about the component here:
+                                    https://github.com/plotly/react-alignment-viewer
+                                    """
+                                ),
+                                
+                            ],style = {'text-align': 'right'}),
         html.Div(
             children = [
         dcc.Graph(id="songposition"),
         dcc.Slider(
         id='song-position-slider',
-        min=data['Position'].min(),
-        max=data['Position'].max(),
-        marks={str(position): str(position) for position in data['Position'].unique()},
+        min=data['Date'].min(),
+        max=data['Date'].max(),
+        marks={int(date): int(date) for date in data['Date'].unique()},
        
         step=None,
-        value=data['Position'].max(),
+        value=data['Date'].max(),
     )],style={'width': '49%', 'display': 'right' },), 
     html.Div(id='slider-output-container'),
     
@@ -125,10 +169,11 @@ app.layout = html.Div(
                 value='Linear',
                 labelStyle={'display': 'inline-block'}
             )
-        ],style={'width': '48%', 'float': 'right', 'display': 'inline-block'})
+        ],style={'width': '48%', 'float': 'right', 'display': 'inline-block'}),
+        
     ]),
 
-    dcc.Graph(id='Compare-Features',),
+    dcc.Graph(id='Compare-Features'),
 
    
 ])
@@ -141,11 +186,13 @@ app.layout = html.Div(
     Output('songposition', 'figure'),
     Input('song-position-slider', 'value'))
 def update_figure(position):
-    filtered_data = data[data.Position == position]
+    filtered_data = data[data.Date == position]
+    #dff = df[df['Year'] == year_value]
     
-    fig1 = px.scatter(filtered_data, x="Date", y="SentimentScore", 
-                size="Position", hover_data=["SongName", "Artist"], 
-                color="Position")
+    fig1 = px.scatter(filtered_data, x="Position", y="SentimentScore", 
+                 hover_data=["SongName", "Artist"], 
+                 size = "Position",
+                color="Position",title="Sentiment of Todays Top Songs According to Position")
     
     fig1.update_layout(transition_duration=500)
 
