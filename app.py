@@ -24,6 +24,8 @@ print(comparison)
 data["Date"] = pd.to_datetime(data["Date"], format="%m/%d/%y")
 data.sort_values("Date", inplace=True)
 
+intOnly = pd.read_sql_query(sql.intValues,conn)
+
 external_stylesheets = [
     {
         "href": "https://fonts.googleapis.com/css2?"
@@ -35,7 +37,7 @@ external_stylesheets = [
 
 #Graphs-----------------------------------------------------------
 '''
-fig = px.scatter(data, x="Date", y="SentimentScore",
+fig1 = px.scatter(data, x="Date", y="SentimentScore",
                  size="SongName", color="SongName", hover_name="Artist",
                  log_x=True, size_max=60)
 '''
@@ -63,21 +65,7 @@ app.layout = html.Div(
             ],
             className="header",
         ),
-        html.Div([
-            dcc.Dropdown(
-                id='crossfilter-xaxis-column',
-                options=[{'label': i, 'value': i} for i in data],
-                value='SongSentiment, total (births per woman)'
-            ),
-            dcc.RadioItems(
-                id='crossfilter-xaxis-type',
-                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
-                value='Linear',
-                labelStyle={'display': 'inline-block'}
-            )
-        ],
-        #className="menu"
-        style={'width': '80%', 'display': 'inline-block'}),
+       
 
         html.Div(
             dcc.Graph(
@@ -106,9 +94,44 @@ app.layout = html.Div(
         value=data['Position'].max(),
     )],style={'width': '49%', 'display': 'right' },), 
     html.Div(id='slider-output-container'),
-    html.Div(children = [
-        dcc.Graph(id="compare-sentiment-to-features")
-    ])
+    
+    html.Div([
+        html.Div([
+
+        html.Div([
+            dcc.Dropdown( 
+                id='xaxis-column',
+                options=[{'label': i, 'value': i} for i in intOnly],
+                value='Tempo'
+            ),
+            dcc.RadioItems(
+                id='xaxis-type',
+                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                value='Linear',
+                labelStyle={'display': 'inline-block'}
+            )
+        ],
+        style={'width': '48%', 'display': 'inline-block'}),
+
+        html.Div([
+            dcc.Dropdown(
+                id='yaxis-column',
+                options=[{'label': i, 'value': i} for i in intOnly],
+                value='SentimentScore'
+            ),
+            dcc.RadioItems(
+                id='yaxis-type',
+                options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
+                value='Linear',
+                labelStyle={'display': 'inline-block'}
+            )
+        ],style={'width': '48%', 'float': 'right', 'display': 'inline-block'})
+    ]),
+
+    dcc.Graph(id='Compare-Features',),
+
+   
+])
     
 ])
       
@@ -120,19 +143,42 @@ app.layout = html.Div(
 def update_figure(position):
     filtered_data = data[data.Position == position]
     
-    fig = px.scatter(filtered_data, x="Date", y="SentimentScore", 
-                size="Position", hover_data=["SongName", "Artist"], 
-                color="Position")
-
-    compare_features = data[data]
-
-    fig1 = px.scatter(chosen_data, x="Date", y="SentimentScore", 
+    fig1 = px.scatter(filtered_data, x="Date", y="SentimentScore", 
                 size="Position", hover_data=["SongName", "Artist"], 
                 color="Position")
     
+    fig1.update_layout(transition_duration=500)
 
+    return fig1
+
+
+@app.callback(
+    Output('Compare-Features', 'figure'),
+    Input('xaxis-column', 'value'),
+    Input('yaxis-column', 'value'),
+    Input('xaxis-type', 'value'),
+    Input('yaxis-type', 'value'),
+    )
+def update_graph(xaxis_column_name, yaxis_column_name,
+                 xaxis_type, yaxis_type):
     
-    fig.update_layout(transition_duration=500)
+
+    fig = px.scatter(data, x=xaxis_column_name,
+                     y=yaxis_column_name,
+                     hover_name=yaxis_column_name,
+                     
+                     color = "Position",
+                     hover_data=["SongName", "Artist"],
+                     
+                     )
+
+    fig.update_layout(margin={'l': 40, 'b': 40, 't': 10, 'r': 0}, hovermode='closest')
+
+    fig.update_xaxes(title=xaxis_column_name,
+                     type='linear' if xaxis_type == 'Linear' else 'log')
+
+    fig.update_yaxes(title=yaxis_column_name,
+                     type='linear' if yaxis_type == 'Linear' else 'log')
 
     return fig
 
