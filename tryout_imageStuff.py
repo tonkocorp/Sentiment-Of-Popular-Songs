@@ -13,6 +13,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 conn = sqlite3.connect('songs.db')
 data = pd.read_sql_query(sql.selectAll, conn)
+intOnly = pd.read_sql_query(sql.intValues,conn)
 
 #available_indicators = data[data].unique()
 
@@ -22,7 +23,7 @@ app.layout = html.Div([
         html.Div([
             dcc.Dropdown( 
                 id='xaxis-column',
-                options=[{'label': i, 'value': i} for i in data],
+                options=[{'label': i, 'value': i} for i in intOnly],
                 value='Tempo'
             ),
             dcc.RadioItems(
@@ -37,7 +38,7 @@ app.layout = html.Div([
         html.Div([
             dcc.Dropdown(
                 id='yaxis-column',
-                options=[{'label': i, 'value': i} for i in data],
+                options=[{'label': i, 'value': i} for i in intOnly],
                 value='SentimentScore'
             ),
             dcc.RadioItems(
@@ -51,14 +52,7 @@ app.layout = html.Div([
 
     dcc.Graph(id='Compare-Features',),
 
-    dcc.Slider(
-        id='year--slider',
-        min=data['Date'].min(),
-        max=data['Date'].max(),
-        value=data['Date'].max(),
-        marks={str(date): str(date) for date in data['Date'].unique()},
-        step=None
-    )
+   
 ])
 
 @app.callback(
@@ -67,15 +61,18 @@ app.layout = html.Div([
     Input('yaxis-column', 'value'),
     Input('xaxis-type', 'value'),
     Input('yaxis-type', 'value'),
-    Input('year--slider', 'value'))
+    )
 def update_graph(xaxis_column_name, yaxis_column_name,
-                 xaxis_type, yaxis_type,
-                 year_value):
-    dataf = data[data['Date'] == date]
+                 xaxis_type, yaxis_type):
+    
 
-    fig = px.scatter(x=dataf[dataf[data] == xaxis_column_name]['Value'],
-                     y=dataf[dataf[data] == yaxis_column_name]['Value'],
-                     hover_name=dataf[dataf[data] == yaxis_column_name]['SongName'])
+    fig = px.scatter(data, x=xaxis_column_name,
+                     y=yaxis_column_name,
+                     hover_name=yaxis_column_name,
+                     size = yaxis_column_name,
+                     hover_data=["SongName", "Artist"],
+                     color = xaxis_column_name
+                     )
 
     fig.update_layout(margin={'l': 40, 'b': 40, 't': 10, 'r': 0}, hovermode='closest')
 
