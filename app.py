@@ -29,6 +29,7 @@ external_stylesheets = [
         "href": "https://fonts.googleapis.com/css2?"
         "family=Lato:wght@400;700&display=swap",
         "rel": "stylesheet",
+        "href": "style.css"
     },
 ]
 
@@ -37,10 +38,8 @@ external_stylesheets = [
 fig = px.scatter(data, x="Date", y="SentimentScore",
                  size="SongName", color="SongName", hover_name="Artist",
                  log_x=True, size_max=60)
-
 '''
-fig = px.scatter(data, x="Date", y="SentimentScore", 
-                size="Position", hover_data=["SongName", "Artist"], color="Position")
+
 
 #-----------------------------------------------------------------
 
@@ -79,7 +78,9 @@ app.layout = html.Div(
         ],
         #className="menu"
         style={'width': '80%', 'display': 'inline-block'}),
-        dcc.Graph(
+
+        html.Div(
+            dcc.Graph(
             figure={
                 "data": [
                     {
@@ -89,28 +90,53 @@ app.layout = html.Div(
                     },
                 ], 
                 "layout": {"title": "Average Sentiment over Time"},
-            }, className ="card",
+            }, 
+        ),className ="card", style={'width': '50%', 'display': 'inline-block','position': 'right'},
         ),
-        
-        dcc.Graph(id="songposition", figure = fig),
+        html.Div(
+            children = [
+        dcc.Graph(id="songposition"),
         dcc.Slider(
-        id='my-slider',
-        min=0,
-        max=10,
-        step=0.5,
-        value=10,
-    ),
+        id='song-position-slider',
+        min=data['Position'].min(),
+        max=data['Position'].max(),
+        marks={str(position): str(position) for position in data['Position'].unique()},
+       
+        step=None,
+        value=data['Position'].max(),
+    )],style={'width': '49%', 'display': 'right' },), 
     html.Div(id='slider-output-container'),
-    html.Img(src='https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1')
+    html.Div(children = [
+        dcc.Graph(id="compare-sentiment-to-features")
+    ])
+    
 ])
       
-    #])
+     #])
 
 @app.callback(
-    dash.dependencies.Output('slider-output-container', 'children'),
-    [dash.dependencies.Input('my-slider', 'value')])
-def update_output(value):
-    return 'You have selected "{}"'.format(value)
+    Output('songposition', 'figure'),
+    Input('song-position-slider', 'value'))
+def update_figure(position):
+    filtered_data = data[data.Position == position]
+    
+    fig = px.scatter(filtered_data, x="Date", y="SentimentScore", 
+                size="Position", hover_data=["SongName", "Artist"], 
+                color="Position")
+
+    compare_features = data[data]
+
+    fig1 = px.scatter(chosen_data, x="Date", y="SentimentScore", 
+                size="Position", hover_data=["SongName", "Artist"], 
+                color="Position")
+    
+
+    
+    fig.update_layout(transition_duration=500)
+
+    return fig
+
+
 
 
 
