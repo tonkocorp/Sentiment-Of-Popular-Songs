@@ -16,9 +16,11 @@ print(data)
 
 # get the average of all sentiment scores for the day
 avg = pd.read_sql_query(sql.averageSentiment,conn)
-print(avg)
+#print(avg)
 comparison = pd.read_sql_query(sql.tempoVersus,conn)
-print(comparison)
+#print(comparison)
+position = pd.read_sql_query(sql.position,conn)
+print(position)
 
 #-----------------------------------------------------------------
 data["Date"] = pd.to_datetime(data["Date"], format="%m/%d/%y")
@@ -36,6 +38,10 @@ external_stylesheets = [
 ]
 
 
+fig1 = px.scatter(position, x="Position", y="SentimentScore", 
+                 hover_data=["SongName", "Artist"], 
+                 size = "Position",
+                color="Position",title="Sentiment of Todays Top Songs According to Position")
 #-----------------------------------------------------------------
 
 
@@ -127,17 +133,10 @@ app.layout = html.Div(
                             ],style = {'text-align': 'right'}),
         html.Div(
             children = [
-        dcc.Graph(id="songposition"),
-        dcc.Slider(
-        id='song-position-slider',
-        min=data['Date'].min(),
-        max=data['Date'].max(),
-        marks={int(date): int(date) for date in data['Date'].unique()},
+        dcc.Graph(id="songposition", figure = fig1),
        
-        step=None,
-        value=data['Date'].max(),
-    )],style={'width': '49%', 'display': 'right' },), 
-    html.Div(id='slider-output-container'),
+    ],style={'width': '49%', 'display': 'right' },), 
+    
     
     html.Div([
         html.Div([
@@ -189,10 +188,7 @@ def update_figure(position):
     filtered_data = data[data.Date == position]
     #dff = df[df['Year'] == year_value]
     
-    fig1 = px.scatter(filtered_data, x="Position", y="SentimentScore", 
-                 hover_data=["SongName", "Artist"], 
-                 size = "Position",
-                color="Position",title="Sentiment of Todays Top Songs According to Position")
+    
     
     fig1.update_layout(transition_duration=500)
 
