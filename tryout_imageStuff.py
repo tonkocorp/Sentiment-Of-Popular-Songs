@@ -69,7 +69,8 @@ def update_graph(xaxis_column_name, yaxis_column_name,
     fig = px.scatter(data, x=xaxis_column_name,
                      y=yaxis_column_name,
                      hover_name=yaxis_column_name,
-                     size = yaxis_column_name,
+                     
+                     color = "Position",
                      hover_data=["SongName", "Artist"],
                      
                      )
