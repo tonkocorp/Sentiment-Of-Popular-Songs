@@ -103,18 +103,19 @@ app.layout = html.Div(
                 ], 
                 "layout": {"title": "Average Sentiment over Time"},
             }, 
-        ),className ="card", style={'width': '90%', 'display': 'inline-block','text-allign': 'center'},
+        ),className ="card", style={'width': '90%', 'display': 'inline-block','margin': 'auto', 'justify-content': 'space-evenly'}
         ),
 
         html.Div( children=[
                                 html.H4(
                                     className='what-is',
-                                    children='Whats the point of this project?'
+                                    children='Whats up with these Graphs?'
                                 ),
                                 html.P(
                                     """
-                                    Sentiment Analysis is a field of machine learning that seeks to
-                                    extract subjective material from text. 
+                                    The Graph on the left retrieves the 10 most recent songs added,
+                                    to the databse and displays them in terms of their individual 
+                                    Sentiment Scores. 
                                     """
                                 ),
                                 html.P(
@@ -130,7 +131,7 @@ app.layout = html.Div(
                                     """
                                 ),
                                 
-                            ],style = {'text-align': 'right'}),
+                            ],style = {'text-align': 'right', 'float': 'right'}),
         html.Div(
             children = [
         dcc.Graph(id="songposition", figure = fig1),
@@ -180,20 +181,6 @@ app.layout = html.Div(
 ])
       
      #])
-
-@app.callback(
-    Output('songposition', 'figure'),
-    Input('song-position-slider', 'value'))
-def update_figure(position):
-    filtered_data = data[data.Date == position]
-    #dff = df[df['Year'] == year_value]
-    
-    
-    
-    fig1.update_layout(transition_duration=500)
-
-    return fig1
-
 
 @app.callback(
     Output('Compare-Features', 'figure'),
