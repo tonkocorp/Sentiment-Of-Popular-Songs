@@ -71,24 +71,29 @@ app.layout = html.Div(
                                 ),
                                 html.P(
                                     """
-                                    The idea of this project is that the music we listen too
-                                    says something about us as a society. So music can be seen as
+                                    
+                                    The music we listen to says something about us and therefore the music we consume as  
+                                    a society should give some indication about the cultural and emotional state as a whole.  
+                                    This project pulls the top ten songs from Spotify every day, retrieves lyrics from the Genius  
+                                    API, then runs them through simple sentiment analysis, with the idea that the sentiment of
+                                    our biggest hits reflects the sentiment of society as a whole. 
+                                  """  
+                                    
+                                ),
+                                html.P(
+                                    """
+                                   However, because lyrics are only one part of a song, audio features are stored as well inside an SQL-Lite Database. The data is displayed here using Dash for python, Plotly, and some CSS.
+                                   Finally, this data dashboard is hosted on a Heroku server.
+
                                     """
                                 ),
                                 html.P(
                                     """
-                                    Each point on the graph is the average sentiment score of the Top Songs for that day.
-                                    The process of attaing these scores is as follows.
-                                    1. 
-                                     
+                                   The graph below displays the average Sentiment score of the Top Ten Songs on Spotify.
+                                   A score above 0 is considered positive while a score below is considered positive.
                                     """
-                                ),
-                                html.P(
-                                    """
-                                   
-                                    """
-                                ),
-                            ]),
+                                )
+                            ],style={'margin-left': '50px', 'margin-right': 'auto', 'width': '60em'}),
        
        
 
@@ -104,7 +109,7 @@ app.layout = html.Div(
                 ], 
                 "layout": {"title": "Average Sentiment over Time"},
             }, 
-        ),className ="card", style={'width': '90%', 'display': 'inline-block','margin': 'auto', 'justify-content': 'space-evenly'}
+        ),className ="card", style={'width': '90%', 'display': 'inline-block','margin': '80px' , 'justify-content': 'space-evenly'}
         ),
 
         html.Div( children=[
@@ -114,30 +119,31 @@ app.layout = html.Div(
                                 ),
                                 html.P(
                                     """
-                                    The Graph on the left retrieves the 10 most recent songs added,
-                                    to the databse and displays them in terms of their individual 
-                                    Sentiment Scores. 
+                                    The graph to the left displays the Top Ten Songs for the day according to their position on the chart. 
+                                    This graph might be slightly misleading the top song is actually ‘position1.’ 
+                                    Also the smaller the size the more popular the song is I’ve tried reversing this but so far to no avail.
                                     """
                                 ),
                                 html.P(
                                     """
-                                    Each point on the graph is the average sentiment score of the Top Songs for that day.
+                                    The Graph below allows a user to compare features of all of the Top Songs on Spotify.
+                                    The radio button on the right controls the values on the y axis while the one on the left controls features on the x-axis. It works well now but once the amount of songs reaches a certain point, it might be good to add some way to filter the data according to a date range probably using a slider.  
+
                                      
                                     """
                                 ),
                                 html.P(
                                     """
-                                    Read more about the component here:
-                                    https://github.com/plotly/react-alignment-viewer
+                                    
                                     """
                                 ),
                                 
-                            ],style = {'text-align': 'right', 'float': 'right'}),
+                            ],style={'margin': '80px', 'width': '33em', 'text-align': 'left',  'float': 'right'}),
         html.Div(
             children = [
         dcc.Graph(id="songposition", figure = fig1),
        
-    ],style={'width': '49%', 'display': 'right' },), 
+    ],className='card', style={ 'margin-left': '80px', 'width': '55%', 'display': 'left', 'margin': '80px' },), 
     
     
     html.Div([
@@ -156,7 +162,7 @@ app.layout = html.Div(
                 labelStyle={'display': 'inline-block'}
             )
         ],
-        style={'width': '48%', 'display': 'inline-block'}),
+         style={'width': '48%', 'display': 'inline-block'}),
 
         html.Div([
             dcc.Dropdown(
@@ -170,11 +176,13 @@ app.layout = html.Div(
                 value='Linear',
                 labelStyle={'display': 'inline-block'}
             )
-        ],style={'width': '48%', 'float': 'right', 'display': 'inline-block'}),
+        ]),
         
-    ]),
+    ],className='menu', style={'width': '50%',  'margin-left': '80px'}),
 
-    dcc.Graph(id='Compare-Features'),
+    html.Div(
+
+    dcc.Graph(id='Compare-Features'), className = 'card', style = {'margin': '80px'})
 
    
 ])
