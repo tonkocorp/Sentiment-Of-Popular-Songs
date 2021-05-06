@@ -39,7 +39,7 @@ def main():
     #this is also fed into the extract features
     #keep in mind that both names and ids call on get_playlist
 
-    playlist = spotify.get_playlist(playlist_Id, limit=10, offset=20)
+    playlist = spotify.get_playlist(playlist_Id, limit=10)
     #print(playlist)
     songs_and_artists1 = spotify.get_names_and_artists(playlist)
     songs_and_artists2 = spotify.get_names_and_artists(playlist)
