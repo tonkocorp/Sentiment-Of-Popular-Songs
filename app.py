@@ -67,24 +67,25 @@ app.layout = html.Div(
          html.Div( children=[
                                 html.H4(
                                     className='what-is',
-                                    children='Whats the point of this project?'
+                                    children='Whats is this project?'
                                 ),
                                 html.P(
                                     """
-                                    Sentiment Analysis is a field of machine learning that seeks to
-                                    extract subjective material from text. 
+                                    The idea of this project is that the music we listen too
+                                    says something about us as a society. So music can be seen as
                                     """
                                 ),
                                 html.P(
                                     """
                                     Each point on the graph is the average sentiment score of the Top Songs for that day.
+                                    The process of attaing these scores is as follows.
+                                    1. 
                                      
                                     """
                                 ),
                                 html.P(
                                     """
-                                    Read more about the component here:
-                                    https://github.com/plotly/react-alignment-viewer
+                                   
                                     """
                                 ),
                             ]),
