@@ -72,7 +72,7 @@ def main():
     #check for duplicates
 
     duplicates = pd.read_sql_query("SELECT SongName, Date, COUNT(*) as Count FROM TopSongs GROUP BY SongName, Date HAVING COUNT(*) > 1",conn)
-    print(duplicates)
+    #print(duplicates)
 
 
     df = pd.read_sql_query("SELECT * FROM TopSongs", conn)
