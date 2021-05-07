@@ -46,7 +46,8 @@ fig1 = px.scatter(position, x="Position", y="SentimentScore",
 
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "Sentiment Analysis of the Top Songs on Spotify: Daily Updates!"
+server = app.server
+app.title = "Sentiment Analysis of the Top Songs on Spotify: Daily Updates (pending)!"
 
 app.layout = html.Div(
     children=[html.Div(
