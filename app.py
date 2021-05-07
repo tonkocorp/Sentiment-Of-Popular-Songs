@@ -9,6 +9,7 @@ import plotly.express as px
 import sqlite3
 import MySQLStatements as sql
 
+from flask import Flask
 #SQL--------------------------------------------------------------
 conn = sqlite3.connect('songs.db')
 data = pd.read_sql_query(sql.selectAll, conn)
