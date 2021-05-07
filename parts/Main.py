@@ -72,14 +72,14 @@ def main():
     #check for duplicates
 
     duplicates = pd.read_sql_query("SELECT SongName, Date, COUNT(*) as Count FROM TopSongs GROUP BY SongName, Date HAVING COUNT(*) > 1",conn)
-    print(duplicates)
+    #print(duplicates)
 
 
     df = pd.read_sql_query("SELECT * FROM TopSongs", conn)
     print(df)
 
 import time
-one_minute = 86400
+one_day = 86400
 
 if __name__ == '__main__':
     
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         main()
         stop = time.time()
         elapsed = stop - start
-        time.sleep(one_minute - elapsed)
+        time.sleep(one_day - elapsed)
     
 
 
