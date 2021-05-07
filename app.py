@@ -93,7 +93,7 @@ app.layout = html.Div(
                                    A score above 0 is considered positive while a score below is considered positive.
                                     """
                                 )
-                            ],style={'margin-left': '50px', 'margin-right': 'auto', 'width': '60em'}),
+                            ],style={'margin-left': '50px', 'margin-right': 'auto', 'width': '60em', 'font-size': 'Large', 'justify-content': 'center'}),
        
        
 
@@ -119,14 +119,14 @@ app.layout = html.Div(
                                 ),
                                 html.P(
                                     """
-                                    The graph to the left displays the Top Ten Songs for the day according to their position on the chart. 
+                                    The graph to the left displays the top ten ongs for the day according to their position on the chart. 
                                     This graph might be slightly misleading the top song is actually ‘position1.’ 
                                     Also the smaller the size the more popular the song is I’ve tried reversing this but so far to no avail.
                                     """
                                 ),
                                 html.P(
                                     """
-                                    The Graph below allows a user to compare features of all of the Top Songs on Spotify.
+                                    The graph below allows a user to compare features of all of the Top Songs on Spotify.
                                     The radio button on the right controls the values on the y axis while the one on the left controls features on the x-axis. It works well now but once the amount of songs reaches a certain point, it might be good to add some way to filter the data according to a date range probably using a slider.  
 
                                      
@@ -138,7 +138,7 @@ app.layout = html.Div(
                                     """
                                 ),
                                 
-                            ],style={'margin': '80px', 'width': '33em', 'text-align': 'left',  'float': 'right'}),
+                            ],style={'margin': '80px', 'width': '33em', 'text-align': 'left',  'float': 'right', 'font-size': 'Large'}),
         html.Div(
             children = [
         dcc.Graph(id="songposition", figure = fig1),
@@ -178,7 +178,7 @@ app.layout = html.Div(
             )
         ]),
         
-    ],className='menu', style={'width': '50%',  'margin-left': '80px'}),
+    ],className='menu', style={'width': '50%',  'margin-left': '80px', 'margin-top': '40px',}),
 
     html.Div(
 
@@ -207,7 +207,7 @@ def update_graph(xaxis_column_name, yaxis_column_name,
                      hover_name=yaxis_column_name,
                      
                      color = "Position",
-                     hover_data=["SongName", "Artist"],
+                     hover_data=["SongName", "Artist"]
                      
                      )
 
