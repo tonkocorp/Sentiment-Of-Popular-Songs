@@ -14,7 +14,7 @@ decorator==4.4.2
 Flask==1.1.2
 Flask-Compress==1.9.0
 future==0.18.2
-gunicorn==20.0.4
+gunicorn==20.1.0
 idna==2.10
 imageio==2.9.0
 itsdangerous==1.1.0
