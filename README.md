@@ -16,3 +16,5 @@ The data dashboar looks likes this...
 This last graph has a dropdown menu where users can select audio features to compare.
 
 <img width="1939" alt="Screen Shot 2021-05-06 at 11 45 34 PM" src="https://user-images.githubusercontent.com/46730210/117399015-2b1c5700-aec5-11eb-912a-a4a098e1b9fc.png">
+
+Also on Hover information is displayed.<img width="690" alt="Screen Shot 2021-05-07 at 12 06 56 AM" src="https://user-images.githubusercontent.com/46730210/117400395-26a56d80-aec8-11eb-9bd6-0eb4c4e58dd2.png">
